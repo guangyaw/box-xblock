@@ -15,11 +15,15 @@ from xblockutils.studio_editable import StudioEditableXBlockMixin
 #     dlenth = "600px"
 
 class BoxXBlock(StudioEditableXBlockMixin, XBlock):
-    display_name = String(display_name="Display name", default='External Html', scope=Scope.settings ,
-                          values=('Live Programming', 'Visualize Coding', 'Lab', 'External Html'))
+    display_name = String(display_name="Display name", default='External Html', scope=Scope.settings)
     # boxcolour = String(display_name="Box Colour", values=('Grey', 'Red', 'Green', 'Blue', 'Yellow'),
     #     default="Grey", scope=Scope.settings,
     #     help="Pick a colour for your box.")
+    boxurl = String(display_name="Box url",
+                    scope=Scope.settings,
+                    help="url for your box.",
+                    default="https://codetutor.openedu.tw/index.html",
+                    )
     boxwidth = String(display_name="Box width",
                       scope=Scope.settings,
                       help="Width for your box.",
@@ -30,11 +34,6 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
                       help="Height for your box.",
                       default="800px",
                       )
-    boxurl = String(display_name="Box url",
-                       scope=Scope.settings,
-                       help="url for your box.",
-                       default=u"https://codetutor.openedu.tw/index.html",
-                       )
     # boxcontent = String(display_name="Contents", multiline_editor='html', resettable_editor=False,
     #     default="", scope=Scope.content,
     #     help="Enter content to be displayed within your box")
@@ -58,8 +57,9 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
         frag.add_javascript(self.resource_string("static/js/src/box.js"))
         frag.initialize_js('BoxXBlock')
         return frag
+
     # Make fields editable in studio
     # editable_fields = ('display_name', 'boxcolour', 'boxwidth', 'boxcontent', )
-    editable_fields = ('display_name', 'boxwidth', 'boxheight', 'boxurl')
+    editable_fields = ('display_name', 'boxurl', 'boxwidth' , 'boxheight')
 
 
