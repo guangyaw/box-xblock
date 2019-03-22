@@ -8,12 +8,6 @@ from xblock.fields import Scope, String
 from web_fragments.fragment import Fragment
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
-# class ShowSize(object):
-#     """
-#     Constants for when to show server
-#     """
-#     dwidth = "800px"
-#     dlenth = "600px"
 
 class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     display_name = String(display_name="Display name", default='External Html', scope=Scope.settings)
