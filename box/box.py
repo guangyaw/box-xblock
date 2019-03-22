@@ -17,7 +17,7 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     boxurl = String(display_name="Box url",
                     scope=Scope.settings,
                     help="url for your box. If iframe code is null, the box'content will depend on the boxurl",
-                    default="https://codetutor.openedu.tw/index.html",
+                    default="https://codetutor.openedu.tw/live.html#mode=edit",
                     )
     boxframe = String(display_name="Box iframe",
                     scope=Scope.settings,
