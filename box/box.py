@@ -4,7 +4,8 @@ import pkg_resources
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String
-from xblock.fragment import Fragment
+# from xblock.fragment import Fragment
+from web_fragments.fragment import Fragment
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
 # class ShowSize(object):
@@ -21,17 +22,21 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     #     help="Pick a colour for your box.")
     boxurl = String(display_name="Box url",
                     scope=Scope.settings,
-                    help="url for your box.",
+                    help="url for your box. If iframe code is null, the box'content will depend on the boxurl",
                     default="https://codetutor.openedu.tw/index.html",
+                    )
+    boxframe = String(display_name="Box iframe",
+                    scope=Scope.settings,
+                    help="iframe code for your box."
                     )
     boxwidth = String(display_name="Box width",
                       scope=Scope.settings,
-                      help="Width for your box.",
+                      help="Width for your box. Only works when iframe code is null.",
                       default="100%",
                       )
     boxheight = String(display_name="Box height",
                       scope=Scope.settings,
-                      help="Height for your box.",
+                      help="Height for your box. Only works when iframe code is null.",
                       default="800px",
                       )
     # boxcontent = String(display_name="Contents", multiline_editor='html', resettable_editor=False,
@@ -50,8 +55,10 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
         The primary view of the BoxXBlock, shown to students
         when viewing courses.
         """
-
-        html = self.resource_string("static/html/box.html")
+        if not self.boxframe:
+            html = self.resource_string("static/html/box.html")
+        elif self.boxframe:
+            html = self.resource_string("static/html/box_iframe.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/box.css"))
         frag.add_javascript(self.resource_string("static/js/src/box.js"))
@@ -60,6 +67,6 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
 
     # Make fields editable in studio
     # editable_fields = ('display_name', 'boxcolour', 'boxwidth', 'boxcontent', )
-    editable_fields = ('display_name', 'boxurl', 'boxwidth' , 'boxheight')
+    editable_fields = ('display_name', 'boxurl', 'boxframe' , 'boxwidth' , 'boxheight')
 
 
