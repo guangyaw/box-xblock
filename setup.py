@@ -23,7 +23,7 @@ def package_data(pkg, roots):
 setup(
     name='box-xblock',
     version='1.1',
-    description='An XBlock for creating coloured boxed content',
+    description='An XBlock for creating html boxed content',
     license='AGPL v3',
     packages=[
         'box',
