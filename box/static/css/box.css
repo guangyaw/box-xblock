@@ -4,6 +4,9 @@
     padding: 1px 1px 1px 1px;
 	border:0;
  }
+.box_block_oer {
+    border-top: aqua 2px;
+ }
 .Blue {
 	/*border-left: 5px solid #060694;*/
 	background-color: #f2f2ff;

@@ -8,6 +8,9 @@ from xblock.fields import Scope, String
 from web_fragments.fragment import Fragment
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
+import requests
+from bs4 import BeautifulSoup
+
 
 class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     display_name = String(display_name="Display name", default='External Html', scope=Scope.settings)
@@ -17,7 +20,7 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     boxurl = String(display_name="Box url",
                     scope=Scope.settings,
                     help="url for your box. If iframe code is null, the box'content will depend on the boxurl",
-                    default="https://codetutor.openedu.tw/live.html#mode=edit",
+                    default="https://oers.taiwanmooc.org/handle/123456789/136467",
                     )
     boxframe = String(display_name="Box iframe",
                     scope=Scope.settings,
@@ -36,6 +39,11 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     # boxcontent = String(display_name="Contents", multiline_editor='html', resettable_editor=False,
     #     default="", scope=Scope.content,
     #     help="Enter content to be displayed within your box")
+    box_oers = String(display_name="Box oers",
+                       scope=Scope.user_state_summary,
+                       help="oer data",
+
+                       )
 
 
 
@@ -49,7 +57,14 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
         The primary view of the BoxXBlock, shown to students
         when viewing courses.
         """
-        if not self.boxframe:
+        if True:
+            retdata = requests.get(self.boxurl)
+            retdata.encoding = "utf8"
+            soup = BeautifulSoup(retdata.text, "lxml")
+            tag = soup.table
+            self.box_oers = tag
+            html = self.resource_string("static/html/box_oer.html")
+        elif not self.boxframe:
             html = self.resource_string("static/html/box.html")
         elif self.boxframe:
             html = self.resource_string("static/html/box_iframe.html")
