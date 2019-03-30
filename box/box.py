@@ -10,7 +10,7 @@ from xblockutils.studio_editable import StudioEditableXBlockMixin
 
 import requests
 from bs4 import BeautifulSoup
-
+import re
 
 class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     display_name = String(display_name="Display name", default='External Html', scope=Scope.settings)
@@ -52,17 +52,22 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+    def data_to_string(self, target):
+        data = str(target)
+        return data
+
     def student_view(self, context=None):
         """
         The primary view of the BoxXBlock, shown to students
         when viewing courses.
         """
-        if True:
+        if re.match("https://oers.taiwanmooc.org+w*", self.boxurl):
             retdata = requests.get(self.boxurl)
             retdata.encoding = "utf8"
             soup = BeautifulSoup(retdata.text, "lxml")
             tag = soup.table
-            self.box_oers = tag
+            ftag = self.data_to_string(tag)
+            self.box_oers = ftag
             html = self.resource_string("static/html/box_oer.html")
         elif not self.boxframe:
             html = self.resource_string("static/html/box.html")
