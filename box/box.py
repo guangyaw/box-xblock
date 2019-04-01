@@ -20,7 +20,7 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     boxurl = String(display_name="Box url",
                     scope=Scope.settings,
                     help="url for your box. If iframe code is null, the box'content will depend on the boxurl",
-                    default="https://oers.taiwanmooc.org/handle/123456789/136467",
+                    default="",
                     )
     boxframe = String(display_name="Box iframe",
                     scope=Scope.settings,
@@ -29,12 +29,12 @@ class BoxXBlock(StudioEditableXBlockMixin, XBlock):
     boxwidth = String(display_name="Box width",
                       scope=Scope.settings,
                       help="Width for your box. Only works when iframe code is null.",
-                      default="100%",
+                      default="880px",
                       )
     boxheight = String(display_name="Box height",
                       scope=Scope.settings,
                       help="Height for your box. Only works when iframe code is null.",
-                      default="800px",
+                      default="600px",
                       )
     # boxcontent = String(display_name="Contents", multiline_editor='html', resettable_editor=False,
     #     default="", scope=Scope.content,
